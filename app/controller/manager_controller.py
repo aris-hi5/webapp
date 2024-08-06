@@ -87,8 +87,8 @@ def show_sales(request: Request, db: Session = Depends(get_db)):
         일별 총 매출 및 아이스크림 매출량 그래프 (HTML)
     """
     sales_data = sales_service.get_sales_data(db)
-    dates, choco_sales, mint_sales, strawberry_sales = sales_service.process_data(
-        sales_data
+    dates, choco_sales, mint_sales, strawberry_sales = (
+        sales_service.process_data_for_sales(sales_data)
     )
     dates_volumes, choco_volumes, mint_volumes, strawberry_volumes = (
         sales_service.process_data_for_volumes(sales_data)
@@ -109,7 +109,7 @@ def show_sales(request: Request, db: Session = Depends(get_db)):
 
     # 첫 번째 그래프: 일자별 총매출액 꺾쇠 그래프
     fig, ax1 = plt.subplots(figsize=(12, 6))  # 창 크기를 키움
-    ax1.plot(formatted_dates, total_sales, label="총 매출", color="blue", linewidth=3)
+    ax1.plot(formatted_dates, total_sales, label="총 매출", color="black", linewidth=3)
 
     for i, date in enumerate(formatted_dates):
         ax1.annotate(

@@ -61,7 +61,7 @@ async def logout(response: Response):
     Returns:
         쿠키 삭제 후 메인 페이지로 리다이렉트
     """
+    response = RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
     response.delete_cookie(key="access-token")
     response.delete_cookie(key="username")
-    response = RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
     return response

@@ -29,7 +29,6 @@ def get_all_logs(db: Session):
     return logs
 
 
-# 카메라 피드 캡처 함수
 def get_robot_view():
     """
     로봇 카메라 피드 캡처 함수
@@ -37,11 +36,16 @@ def get_robot_view():
         frame: 로봇 카메라 피드 프레임
     """
     cap = cv2.VideoCapture(0)
-    while True:
-        success, frame = cap.read()
-        if not success:
-            break
-        else:
-            ret, buffer = cv2.imencode(".jpg", frame)
-            frame = buffer.tobytes()
-            yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
+    try:
+        while True:
+            success, frame = cap.read()
+            if not success:
+                break
+            else:
+                ret, buffer = cv2.imencode(".jpg", frame)
+                frame = buffer.tobytes()
+                yield (
+                    b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n"
+                )
+    finally:
+        cap.release()

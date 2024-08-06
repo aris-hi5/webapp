@@ -3,7 +3,7 @@ name: Create PR to main
 on:
   pull_request:
     branches:
-      - aris-hi5/dev
+      - dev
     types:
       - closed
 
@@ -22,7 +22,7 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          base: aris-hi5/main
+          base: main
           branch: ${{ github.ref }}
           title: "Automated PR from dev to main"
           body: "This PR was automatically created from dev to main."
